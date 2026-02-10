@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Warehouse.Models.Domain;
 using Warehouse.Models.Dtos;
 using Warehouse.Services;
 

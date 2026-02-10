@@ -12,15 +12,6 @@ public static class ApplicationBuilderExtensions
             {
                 var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
                 context.Response.ContentType = "application/json";
-
-                // context.Response.StatusCode = exception switch
-                // {
-                //     ArgumentException => StatusCodes.Status400BadRequest,
-                //     Npgsql.PostgresException => StatusCodes.Status500InternalServerError,
-                //     _ => StatusCodes.Status500InternalServerError
-                // };
-                //
-                // await context.Response.WriteAsJsonAsync(exception?.Message);
                 switch (exception)
                 {
                     case Npgsql.PostgresException:

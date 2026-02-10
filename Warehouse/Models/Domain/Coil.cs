@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Warehouse.Models.Domain;
 
 public class Coil
