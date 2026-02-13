@@ -17,16 +17,17 @@ public class CoilStatisticsService
     {
         var periodStart = period.PeriodStart;
         var periodEnd = period.PeriodEnd;
+        var coilsPerPeriod = GetStoragedCoils(periodStart, periodEnd);
         
-        var coilsLenghts = _context.Coils.Select(e => e.Lenght);
-        var coilsWeights = _context.Coils.Select(e => e.Weight);
+        var coilsLenghts = coilsPerPeriod.Select(e => e.Lenght);
+        var coilsWeights = coilsPerPeriod.Select(e => e.Weight);
         var coilsDurations = GetCoilsDurations(periodStart, periodEnd);
         var (minCoilsDay, maxCoilsDay) = GetDayWithMinAndMaxCoils(period);
         var (minWeightDay, maxWeightDay) = GetDayWithMinAndMaxWeight(period);
         return new CoilStatisticsDto()
         {
-            CountAdded = _context.Coils.Count(e => e.AddedDate >= periodStart && e.AddedDate < periodEnd),
-            CountDeleted = _context.Coils
+            CountAdded = coilsPerPeriod.Count(e => e.AddedDate >= periodStart && e.AddedDate < periodEnd),
+            CountDeleted = coilsPerPeriod
                 .Count(e => e.RemovedDate != null && e.RemovedDate >= periodStart && e.RemovedDate < periodEnd),
             AverageLenght = coilsLenghts.DefaultIfEmpty().Average(),
             AverageWeight = coilsWeights.DefaultIfEmpty().Average(),
